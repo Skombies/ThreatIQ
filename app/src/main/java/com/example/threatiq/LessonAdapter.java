@@ -1,6 +1,7 @@
 package com.example.threatiq;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +33,30 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
         Lesson lesson = lessonList.get(position);
         holder.lessonTitle.setText(lesson.getTitle());
         holder.lessonImage.setImageResource(lesson.getImageResourceId());
+
+
+        // --- THIS IS THE NEW PART ---
+        // Set a click listener on the entire row view
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // When clicked, open the detail activity
+                openLessonDetail(lesson.getTitle(), lesson.getImageResourceId());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return lessonList.size();
+    }
+
+    // --- ADD THIS HELPER METHOD ---
+    private void openLessonDetail(String title, int imageResId) {
+        Intent intent = new Intent(context, LessonDetailActivity.class);
+        intent.putExtra("LESSON_TITLE", title);
+        intent.putExtra("LESSON_IMAGE_RES_ID", imageResId);
+        context.startActivity(intent);
     }
 
     public static class LessonViewHolder extends RecyclerView.ViewHolder {
