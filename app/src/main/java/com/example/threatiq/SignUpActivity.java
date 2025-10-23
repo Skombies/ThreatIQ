@@ -7,7 +7,7 @@ import android.widget.Button; // <-- Add this import
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class SignupActivity extends AppCompatActivity {
                 // TODO: Add your user registration logic here (e.g., save to Firebase)
 
                 // For now, navigate to the main app screen after "signing up"
-                Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                 // Clear the activity stack so the user can't go back to the login/signup flow
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);

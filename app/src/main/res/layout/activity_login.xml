@@ -41,22 +41,27 @@
         android:textStyle="bold"
         android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/app_name"
-        app:layout_constraintEnd_toStartOf="@+id/sign_up_tab"
+        app:layout_constraintEnd_toStartOf="@+id/sign_up_link"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="32dp"/>
 
+    <!-- START OF CHANGE: Renamed ID for clarity and added padding for better click area -->
     <TextView
-        android:id="@+id/sign_up_tab"
+        android:id="@+id/sign_up_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SIGN UP"
         android:textColor="@android:color/darker_gray"
         android:textSize="18sp"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintTop_toTopOf="@id/sign_in_tab"
         app:layout_constraintStart_toEndOf="@id/sign_in_tab"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="32dp"/>
+        android:layout_marginStart="24dp"/>
+    <!-- END OF CHANGE -->
 
     <!-- Input Fields -->
     <EditText

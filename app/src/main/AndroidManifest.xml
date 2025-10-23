@@ -33,7 +33,8 @@
             android:exported="false" />
 
         <activity
-            android:name=".LessonDetailActivity"        android:exported="false"
+            android:name=".LessonDetailActivity"
+            android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- Use NoActionBar theme for CollapsingToolbar -->
 
         <activity
@@ -47,6 +48,12 @@
             android:name=".ProfileActivity"
             android:exported="false" />
 
-</application>
+        <!-- START OF FIX: Added the missing SignUpActivity declaration -->
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <!-- END OF FIX -->
+
+    </application>
 
 </manifest>

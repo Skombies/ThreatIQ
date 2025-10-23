@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.threatiq.SignUpActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -14,18 +15,27 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        TextView signUpTab = findViewById(R.id.sign_up_tab);
+        // --- START OF FIX ---
+
+        // Find the "Sign Up" link using the CORRECT ID from your activity_login.xml.
+        TextView signupLink = findViewById(R.id.sign_up_link);
+
+        // Find the "Sign In" button from your activity_login.xml.
         Button signInButton = findViewById(R.id.sign_in_button);
 
-        signUpTab.setOnClickListener(new View.OnClickListener() {
+        // --- END OF FIX ---
+
+        // Set a listener for the "Sign Up" link.
+        signupLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to SignupActivity
-                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                // The class name must be EXACTLY "SignUpActivity" (case-sensitive).
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                 startActivity(intent);
             }
         });
 
+        // Set a listener for the "Sign In" button.
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                 // For now, let's navigate to the main app screen
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish(); // Close the login activity
+                finish(); // Close the login activity so the user can't go back to it
             }
         });
     }

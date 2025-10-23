@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager; // <-- IMPORT THIS
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -25,14 +26,19 @@ public class LessonsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lessons);
 
         lessonsRecyclerView = findViewById(R.id.lessons_recycler_view);
-        lessonsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // --- THIS IS THE KEY CHANGE ---
+        // Change from LinearLayoutManager to GridLayoutManager with 2 columns
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        lessonsRecyclerView.setLayoutManager(gridLayoutManager);
+        // -----------------------------
 
         // Initialize and populate the list of lessons
         lessonList = new ArrayList<>();
         lessonList.add(new Lesson("Password Security", R.drawable.password_security));
         lessonList.add(new Lesson("Phishing", R.drawable.phishing));
         lessonList.add(new Lesson("Social Engineering", R.drawable.social_engineering));
-        lessonList.add(new Lesson("Malware Protection", R.drawable.advanced_persistent_threat));
+        lessonList.add(new Lesson("Malware", R.drawable.malware));
         // Add more lessons as needed
 
         // Set up the adapter
@@ -41,30 +47,24 @@ public class LessonsActivity extends AppCompatActivity {
 
         // --- Handle the Bottom Navigation ---
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.navigation_lessons); // Set "Lessons" as selected
+        bottomNavigationView.setSelectedItemId(R.id.navigation_lessons);
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
                 if (itemId == R.id.navigation_home) {
-                    // Go to Home Activity
                     startActivity(new Intent(LessonsActivity.this, MainActivity.class));
                     finish();
                     return true;
                 } else if (itemId == R.id.navigation_lessons) {
-                    // Already on the lessons screen
                     return true;
                 } else if (itemId == R.id.navigation_quizzes) {
-                    // --- THIS IS THE FIX ---
-                    // Start QuizzesActivity
                     startActivity(new Intent(LessonsActivity.this, QuizzesActivity.class));
-                    finish(); // Close this activity
+                    finish();
                     return true;
-                    // -----------------------
                 } else if (itemId == R.id.navigation_profile) {
-                    // Start ProfileActivity
-                    startActivity(new Intent(LessonsActivity.this, ProfileActivity.class)); // Use 'this' qualified by the Activity name if needed
+                    startActivity(new Intent(LessonsActivity.this, ProfileActivity.class));
                     finish();
                     return true;
                 }

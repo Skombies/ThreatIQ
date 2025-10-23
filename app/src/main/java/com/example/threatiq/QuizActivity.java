@@ -67,6 +67,7 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+
     private void checkAnswer(int selectedOptionIndex) {
         Question currentQuestion = selectedQuiz.getQuestions().get(currentQuestionIndex);
         if (selectedOptionIndex == currentQuestion.getCorrectAnswerIndex()) {
@@ -79,6 +80,7 @@ public class QuizActivity extends AppCompatActivity {
         for (int i = 0; i < optionsContainer.getChildCount(); i++) {
             optionsContainer.getChildAt(i).setEnabled(false);
         }
+
     }
 }
 

@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             socialCard.setOnClickListener(v -> openLessonDetail("Social Engineering", R.drawable.social_engineering));
         }
         if (malwareCard != null) {
-            malwareCard.setOnClickListener(v -> openLessonDetail("Malware Protection", R.drawable.advanced_persistent_threat));
+            malwareCard.setOnClickListener(v -> openLessonDetail("Malware Protection", R.drawable.malware));
         }
     }
 

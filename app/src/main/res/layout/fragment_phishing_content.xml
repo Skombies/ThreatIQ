@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".PhishingContentFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/fragment_content_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:lineSpacingMultiplier="1.2"
+            tools:text="This is a very long block of text that would normally overflow the screen. By wrapping it in a NestedScrollView with fillViewport=true and a LinearLayout, we ensure that the content can be scrolled vertically if it exceeds the available space. This provides a much better user experience for longer lesson pages." />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+
