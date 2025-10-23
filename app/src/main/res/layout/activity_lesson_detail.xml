@@ -75,10 +75,6 @@
             android:visibility="gone"
             tools:visibility="visible">
 
-            <!-- THE TABLAYOUT HAS BEEN REMOVED FROM HERE -->
-
-            <!-- ViewPager to display the swipeable fragments -->
-            <!-- It now fills the parent, since the TabLayout is gone -->
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/phishing_view_pager"
                 android:layout_width="match_parent"

@@ -35,7 +35,7 @@
         <activity
             android:name=".LessonDetailActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- Use NoActionBar theme for CollapsingToolbar -->
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
             android:name=".QuizzesActivity"
@@ -48,11 +48,10 @@
             android:name=".ProfileActivity"
             android:exported="false" />
 
-        <!-- START OF FIX: Added the missing SignUpActivity declaration -->
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />
-        <!-- END OF FIX -->
+
 
     </application>
 

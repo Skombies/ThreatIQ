@@ -28,24 +28,21 @@ public class LessonsActivity extends AppCompatActivity {
         lessonsRecyclerView = findViewById(R.id.lessons_recycler_view);
 
         // --- THIS IS THE KEY CHANGE ---
-        // Change from LinearLayoutManager to GridLayoutManager with 2 columns
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         lessonsRecyclerView.setLayoutManager(gridLayoutManager);
-        // -----------------------------
 
-        // Initialize and populate the list of lessons
+        // List of lessons
         lessonList = new ArrayList<>();
         lessonList.add(new Lesson("Password Security", R.drawable.password_security));
         lessonList.add(new Lesson("Phishing", R.drawable.phishing));
         lessonList.add(new Lesson("Social Engineering", R.drawable.social_engineering));
         lessonList.add(new Lesson("Malware", R.drawable.malware));
-        // Add more lessons as needed
 
         // Set up the adapter
         lessonAdapter = new LessonAdapter(this, lessonList);
         lessonsRecyclerView.setAdapter(lessonAdapter);
 
-        // --- Handle the Bottom Navigation ---
+        // Handles for the Bottom Navigation
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.navigation_lessons);
 
