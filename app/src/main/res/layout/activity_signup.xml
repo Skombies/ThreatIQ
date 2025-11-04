@@ -32,7 +32,7 @@
         android:layout_marginTop="16dp"/>
 
     <!-- Sign In / Sign Up Tabs -->
-    <TextView
+    <Button
         android:id="@+id/sign_in_tab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="32dp"/>
 
-    <TextView
+    <Button
         android:id="@+id/sign_up_tab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
