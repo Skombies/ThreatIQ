@@ -1,6 +1,8 @@
 package com.example.threatiq;
 
-public class Lesson {
+public class
+
+Lesson {
     private String title;
     private int imageResourceId;    public Lesson(String title, int imageResourceId) {
         this.title = title;

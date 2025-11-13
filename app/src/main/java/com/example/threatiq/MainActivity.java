@@ -3,6 +3,8 @@ package com.example.threatiq;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -13,10 +15,16 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
+    private TextView profileName;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +41,36 @@ public class MainActivity extends AppCompatActivity {
         setupLessonCardClicks();
         // -------------------------------
 
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        profileName = findViewById(R.id.textView);
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+
+        db.collection("users").document(currentUser.getUid())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String username = documentSnapshot.getString("username");
+                        if (username != null && !username.isEmpty()) {
+                            profileName.setText(username.toUpperCase());
+                        } else {
+                            profileName.setText("USER");
+                        }
+                    } else {
+                        profileName.setText("USER");
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(MainActivity.this, "Error loading profile", Toast.LENGTH_SHORT).show();
+                    profileName.setText("USER");
+                });
+
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

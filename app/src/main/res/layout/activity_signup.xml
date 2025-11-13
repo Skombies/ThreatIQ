@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +8,7 @@
     android:background="@android:color/white"
     tools:context=".SignupActivity">
 
-    <!-- App Logo and Name -->
+    <!-- App Logo -->
     <ImageView
         android:id="@+id/app_logo"
         android:layout_width="80dp"
@@ -16,8 +17,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="64dp"/>
+        android:layout_marginTop="64dp" />
 
+    <!-- App Name -->
     <TextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
@@ -29,9 +31,9 @@
         app:layout_constraintTop_toBottomOf="@id/app_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp" />
 
-    <!-- Sign In / Sign Up Tabs -->
+    <!-- Tabs: Sign In / Sign Up -->
     <Button
         android:id="@+id/sign_in_tab"
         android:layout_width="wrap_content"
@@ -39,11 +41,13 @@
         android:text="SIGN IN"
         android:textColor="@android:color/darker_gray"
         android:textSize="18sp"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintTop_toBottomOf="@id/app_name"
         app:layout_constraintEnd_toStartOf="@+id/sign_up_tab"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="32dp"/>
+        android:layout_marginTop="32dp" />
 
     <Button
         android:id="@+id/sign_up_tab"
@@ -56,9 +60,9 @@
         app:layout_constraintTop_toTopOf="@id/sign_in_tab"
         app:layout_constraintStart_toEndOf="@id/sign_in_tab"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="32dp"/>
+        android:layout_marginStart="32dp" />
 
-    <!-- Input Fields -->
+    <!-- Username Input -->
     <EditText
         android:id="@+id/username_input"
         android:layout_width="0dp"
@@ -73,8 +77,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"/>
+        android:layout_marginEnd="32dp" />
 
+    <!-- Email Input -->
     <EditText
         android:id="@+id/email_input"
         android:layout_width="0dp"
@@ -89,8 +94,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"/>
+        android:layout_marginEnd="32dp" />
 
+    <!-- Password Input -->
     <EditText
         android:id="@+id/password_input"
         android:layout_width="0dp"
@@ -105,7 +111,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"/>
+        android:layout_marginEnd="32dp" />
 
     <!-- Sign Up Button -->
     <Button
@@ -115,12 +121,11 @@
         android:text="SIGN UP"
         android:backgroundTint="#1A3A3A"
         android:textColor="@android:color/white"
-        app:cornerRadius="30dp"
         app:layout_constraintTop_toBottomOf="@id/password_input"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"/>
+        android:layout_marginEnd="32dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
