@@ -123,6 +123,24 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LessonDetailActivity.class);
         intent.putExtra("LESSON_TITLE", title);
         intent.putExtra("LESSON_IMAGE_RES_ID", imageResId);
+
+        // Map Firestore document names
+        switch (title) {
+            case "Password Security":
+                intent.putExtra("LESSON_ID", "password-security");
+                break;
+            case "Phishing":
+                intent.putExtra("LESSON_ID", "phishing");
+                break;
+            case "Social Engineering":
+                intent.putExtra("LESSON_ID", "social-engineering");
+                break;
+            case "Malware Protection":
+                intent.putExtra("LESSON_ID", "malware-protection");
+                break;
+        }
+
         startActivity(intent);
     }
+
 }
