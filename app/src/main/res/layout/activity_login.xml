@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +8,7 @@
     android:background="@android:color/white"
     tools:context=".LoginActivity">
 
-    <!-- App Logo and Name -->
+    <!-- App Logo -->
     <ImageView
         android:id="@+id/app_logo"
         android:layout_width="80dp"
@@ -16,8 +17,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="64dp"/>
+        android:layout_marginTop="64dp" />
 
+    <!-- App Name -->
     <TextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
@@ -29,9 +31,9 @@
         app:layout_constraintTop_toBottomOf="@id/app_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp" />
 
-    <!-- Sign In / Sign Up Tabs -->
+    <!-- Tabs: Sign In / Sign Up -->
     <TextView
         android:id="@+id/sign_in_tab"
         android:layout_width="wrap_content"
@@ -41,29 +43,26 @@
         android:textStyle="bold"
         android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/app_name"
-        app:layout_constraintEnd_toStartOf="@+id/sign_up_link"
+        app:layout_constraintEnd_toStartOf="@+id/sign_up_tab"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="32dp"/>
+        android:layout_marginTop="32dp" />
 
-    <!-- START OF CHANGE: Renamed ID for clarity and added padding for better click area -->
     <TextView
-        android:id="@+id/sign_up_link"
+        android:id="@+id/sign_up_tab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SIGN UP"
         android:textColor="@android:color/darker_gray"
         android:textSize="18sp"
-        android:padding="8dp"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintTop_toTopOf="@id/sign_in_tab"
         app:layout_constraintStart_toEndOf="@id/sign_in_tab"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="24dp"/>
-    <!-- END OF CHANGE -->
+        android:layout_marginStart="32dp" />
 
-    <!-- Input Fields -->
+    <!-- Email Input -->
     <EditText
         android:id="@+id/email_input"
         android:layout_width="0dp"
@@ -78,8 +77,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"/>
+        android:layout_marginEnd="32dp" />
 
+    <!-- Password Input -->
     <EditText
         android:id="@+id/password_input"
         android:layout_width="0dp"
@@ -94,7 +94,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"/>
+        android:layout_marginEnd="32dp" />
 
     <!-- Sign In Button -->
     <Button
@@ -104,13 +104,12 @@
         android:text="SIGN IN"
         android:backgroundTint="#1A3A3A"
         android:textColor="@android:color/white"
-        app:cornerRadius="30dp"
         app:layout_constraintTop_toBottomOf="@id/password_input"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"/>
+        android:layout_marginEnd="32dp" />
 
     <!-- Forgot Password -->
     <TextView
@@ -118,10 +117,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Forgot Password?"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@android:color/holo_blue_dark"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintTop_toBottomOf="@id/sign_in_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp"/>
+        android:layout_marginTop="24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

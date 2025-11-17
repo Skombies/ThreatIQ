@@ -7,7 +7,6 @@
     android:background="@android:color/white"
     tools:context=".LessonDetailActivity">
 
-    <!-- AppBar and Toolbar remain unchanged -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -40,72 +39,42 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Content Area -->
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!-- Container for default (non-phishing) lessons -->
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/default_content_scroll_view"
+        <LinearLayout
+            android:id="@+id/cont_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            tools:visibility="gone">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/lesson_detail_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:text="Lesson Title" />
+
             <TextView
                 android:id="@+id/lesson_detail_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:layout_marginTop="16dp"
+                android:lineSpacingMultiplier="1.4"
+                android:text="This is where the detailed content of the lesson will go. You can explain the topic in depth here, providing examples and best practices to help the user learn effectively."
                 android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:lineSpacingMultiplier="1.2"
-                tools:text="This is where the content for default lessons will appear." />
-        </androidx.core.widget.NestedScrollView>
+                android:textSize="16sp" />
 
+        </LinearLayout>
 
-        <!-- Container for the Phishing Lesson content (Pager, Dots, Arrows) -->
-        <RelativeLayout
-            android:id="@+id/phishing_content_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/phishing_view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <!-- Previous Page Arrow -->
-            <ImageView
-                android:id="@+id/arrow_previous"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_arrow_back"
-                app:tint="#80000000" />
-
-            <!-- Next Page Arrow -->
-            <ImageView
-                android:id="@+id/arrow_next"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_arrow_forward"
-                app:tint="#80000000" />
-
-        </RelativeLayout>
-
-    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
