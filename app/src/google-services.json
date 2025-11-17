@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "726653765442",
+    "project_id": "project-95471",
+    "storage_bucket": "project-95471.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726653765442:android:56f6e11424c0ad9f75aadb",
+        "android_client_info": {
+          "package_name": "com.example.threatiq"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLj11rqquSlBsJRg5kJCO_Ass1jBwFt4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
