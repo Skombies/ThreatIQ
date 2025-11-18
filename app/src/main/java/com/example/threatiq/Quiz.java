@@ -7,23 +7,15 @@ import java.util.List;
 public class Quiz implements Serializable {
     private String quizTitle;
     private int imageResourceId;
-    private List<Question> questions;
+    private String quizId;
 
-    public Quiz(String quizTitle, int imageResourceId, List<Question> questions) {
+    public Quiz(String quizTitle, int imageResourceId, String quizId) {
         this.quizTitle = quizTitle;
         this.imageResourceId = imageResourceId;
-        this.questions = questions;
+        this.quizId = quizId;
     }
 
-    public String getQuizTitle() {
-        return quizTitle;
-    }
-
-    public int getImageResourceId() {
-        return imageResourceId;
-    }
-
-    public List<Question> getQuestions() {
-        return questions;
-    }
+    public String getQuizTitle() { return quizTitle; }
+    public int getImageResourceId() { return imageResourceId; }
+    public String getQuizId() { return quizId; }
 }

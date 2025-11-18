@@ -3,12 +3,18 @@ package com.example.threatiq;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,24 +70,24 @@ public class QuizzesActivity extends AppCompatActivity {
 
     private void setupQuizData() {
         quizList = new ArrayList<>();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Quiz 1: Password Security
-        List<Question> passwordQuestions = new ArrayList<>(Arrays.asList(
-                new Question("What is the most important feature of a strong password?",
-                        Arrays.asList("Length", "Using a pet's name", "Using your birthday", "A common word"), 0),
-                new Question("What is '2FA'?",
-                        Arrays.asList("Two-Factor Authentication", "Two-Friend Agreement", "Twice-Failed Access"), 1)
-        ));
-        quizList.add(new Quiz("Password Security Quiz", R.drawable.password_security, passwordQuestions));
+        db.collection("quizzes").get()
+                .addOnSuccessListener(query -> {
+                    for (DocumentSnapshot doc : query) {
+                        String title = doc.getString("title");
+                        String image = doc.getString("image");
+                        String quizId = doc.getId();
 
-        // Quiz 2: Phishing
-        List<Question> phishingQuestions = new ArrayList<>(Arrays.asList(
-                new Question("What should you do if you receive a suspicious email?",
-                        Arrays.asList("Click the link to see", "Reply with personal info", "Delete it and report as spam"), 2)
-        ));
-        quizList.add(new Quiz("Phishing Quiz", R.drawable.phishing, phishingQuestions));
+                        int imageRes = getResources().getIdentifier(image, "drawable", getPackageName());
 
-        // Add more quizzes here...
+                        quizList.add(new Quiz(title, imageRes, quizId));
+                    }
+                    quizAdapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Failed to load quizzes", Toast.LENGTH_SHORT).show()
+                );
     }
 }
 

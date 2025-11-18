@@ -69,9 +69,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:lineSpacingMultiplier="1.4"
-                android:text="This is where the detailed content of the lesson will go. You can explain the topic in depth here, providing examples and best practices to help the user learn effectively."
+                android:text=""
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
+
+
 
         </LinearLayout>
 
