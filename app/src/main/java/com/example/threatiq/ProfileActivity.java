@@ -94,16 +94,19 @@ public class ProfileActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.navigation_home) {
-                startActivity(new Intent(ProfileActivity.this, MainActivity.class));
-                finish();
+                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_lessons) {
-                startActivity(new Intent(ProfileActivity.this, LessonsActivity.class));
-                finish();
+                Intent intent = new Intent(ProfileActivity.this, LessonsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_quizzes) {
-                startActivity(new Intent(ProfileActivity.this, QuizzesActivity.class));
-                finish();
+                Intent intent = new Intent(ProfileActivity.this, QuizzesActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_profile) {
                 return true;

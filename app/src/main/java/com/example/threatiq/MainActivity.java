@@ -2,7 +2,10 @@ package com.example.threatiq;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;import android.view.View;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,10 +22,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private TextView profileName;
+    private AutoCompleteTextView searchAutoComplete;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -31,25 +38,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         // --- SETUP LESSON CARD CLICKS ---
         setupLessonCardClicks();
         // -------------------------------
-
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         profileName = findViewById(R.id.textView);
+        searchAutoComplete = findViewById(R.id.search_autocomplete);
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
 
         db.collection("users").document(currentUser.getUid())
                 .get()
@@ -70,30 +71,44 @@ public class MainActivity extends AppCompatActivity {
                     profileName.setText("USER");
                 });
 
+        // --- SEARCH BAR --- 
+        setupSearch();
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
                 if (itemId == R.id.navigation_home) {
-                    // Already on the home screen
                     return true;
                 } else if (itemId == R.id.navigation_lessons) {
-                    startActivity(new Intent(MainActivity.this, LessonsActivity.class));
+                    Intent intent = new Intent(MainActivity.this, LessonsActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
                     return true;
                 } else if (itemId == R.id.navigation_quizzes) {
-                    // --- FIX IS HERE ---
-                    // Start QuizzesActivity
-                    startActivity(new Intent(MainActivity.this, QuizzesActivity.class));
+                    Intent intent = new Intent(MainActivity.this, QuizzesActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
                     return true;
                 } else if (itemId == R.id.navigation_profile) {
-                    // Start ProfileActivity
-                    startActivity(new Intent(MainActivity.this, ProfileActivity.class)); // Use 'this' qualified by the Activity name if needed
-                    finish(); // Close the current activity
+                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
                     return true;
                 }
                 return false;
             }
+        });
+    }
+
+    private void setupSearch() {
+        List<String> lessonTitles = Arrays.asList("Password Security", "Phishing", "Social Engineering", "Malware Protection");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, lessonTitles);
+        searchAutoComplete.setAdapter(adapter);
+
+        searchAutoComplete.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedTitle = (String) parent.getItemAtPosition(position);
+            openLessonDetail(selectedTitle, getResourceIdForLessonTitle(selectedTitle));
         });
     }
 
@@ -116,6 +131,21 @@ public class MainActivity extends AppCompatActivity {
         }
         if (malwareCard != null) {
             malwareCard.setOnClickListener(v -> openLessonDetail("Malware Protection", R.drawable.malware));
+        }
+    }
+
+    private int getResourceIdForLessonTitle(String title) {
+        switch (title) {
+            case "Password Security":
+                return R.drawable.password_security;
+            case "Phishing":
+                return R.drawable.phishing;
+            case "Social Engineering":
+                return R.drawable.social_engineering;
+            case "Malware Protection":
+                return R.drawable.malware;
+            default:
+                return 0; // Or a default image
         }
     }
 

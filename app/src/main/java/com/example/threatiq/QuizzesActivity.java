@@ -49,20 +49,22 @@ public class QuizzesActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.navigation_home) {
-                startActivity(new Intent(QuizzesActivity.this, MainActivity.class));
-                finish();
+                Intent intent = new Intent(QuizzesActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_lessons) {
-                startActivity(new Intent(QuizzesActivity.this, LessonsActivity.class));
-                finish();
+                Intent intent = new Intent(QuizzesActivity.this, LessonsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_quizzes) {
                 return true; // Already here
             }
             else if (itemId == R.id.navigation_profile) {
-                // Start ProfileActivity
-                startActivity(new Intent(QuizzesActivity.this, ProfileActivity.class)); // Use 'this' qualified by the Activity name if needed
-                finish(); // Close the current activity
+                Intent intent = new Intent(QuizzesActivity.this, ProfileActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
             }
             return false;
         });

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager; // <-- IMPORT THIS
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -36,7 +36,7 @@ public class LessonsActivity extends AppCompatActivity {
         lessonList.add(new Lesson("Password Security", R.drawable.password_security));
         lessonList.add(new Lesson("Phishing", R.drawable.phishing));
         lessonList.add(new Lesson("Social Engineering", R.drawable.social_engineering));
-        lessonList.add(new Lesson("Malware", R.drawable.malware));
+        lessonList.add(new Lesson("Malware Protection", R.drawable.malware));
 
         // Set up the adapter
         lessonAdapter = new LessonAdapter(this, lessonList);
@@ -51,18 +51,21 @@ public class LessonsActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
                 if (itemId == R.id.navigation_home) {
-                    startActivity(new Intent(LessonsActivity.this, MainActivity.class));
-                    finish();
+                    Intent intent = new Intent(LessonsActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
                     return true;
                 } else if (itemId == R.id.navigation_lessons) {
                     return true;
                 } else if (itemId == R.id.navigation_quizzes) {
-                    startActivity(new Intent(LessonsActivity.this, QuizzesActivity.class));
-                    finish();
+                    Intent intent = new Intent(LessonsActivity.this, QuizzesActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
                     return true;
                 } else if (itemId == R.id.navigation_profile) {
-                    startActivity(new Intent(LessonsActivity.this, ProfileActivity.class));
-                    finish();
+                    Intent intent = new Intent(LessonsActivity.this, ProfileActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent);
                     return true;
                 }
                 return false;

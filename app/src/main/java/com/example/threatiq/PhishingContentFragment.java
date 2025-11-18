@@ -15,11 +15,10 @@ public class PhishingContentFragment extends Fragment {
     private static final String ARG_CONTENT = "content";
     private SpannableStringBuilder content;
 
-    // Factory method to create a new instance of this fragment with content
     public static PhishingContentFragment newInstance(SpannableStringBuilder content) {
         PhishingContentFragment fragment = new PhishingContentFragment();
         Bundle args = new Bundle();
-        args.putCharSequence(ARG_CONTENT, content); // SpannableStringBuilder is a CharSequence
+        args.putCharSequence(ARG_CONTENT, content);
         fragment.setArguments(args);
         return fragment;
     }

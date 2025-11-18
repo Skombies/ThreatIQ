@@ -21,13 +21,11 @@ public class PhishingPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        // Create a new fragment instance for the given page
         return PhishingContentFragment.newInstance(pages.get(position));
     }
 
     @Override
     public int getItemCount() {
-        // Return the total number of pages
         return pages.size();
     }
 }

@@ -35,7 +35,6 @@ public class SignupActivity extends AppCompatActivity {
 
         signInTab.setOnClickListener(v -> {
             startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-            finish();
         });
 
         signUpButton.setOnClickListener(v -> {
