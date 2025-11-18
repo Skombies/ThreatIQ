@@ -94,32 +94,7 @@ public class LessonDetailActivity extends AppCompatActivity {
         contentContainer.addView(titleView);
         contentContainer.addView(storyView);
 
-        if (questions != null && answers != null) {
-            for (int i = 0; i < questions.size(); i++) {
-                TextView qView = new TextView(this);
-                qView.setText("Q" + (i + 1) + ": " + questions.get(i));
-                qView.setTextSize(16f);
-                qView.setTypeface(null, android.graphics.Typeface.BOLD);
-                qView.setPadding(0, 8, 0, 4);
-                contentContainer.addView(qView);
-
-                if (i < answers.size()) {
-                    TextView aView = new TextView(this);
-                    aView.setText("A: " + answers.get(i));
-                    aView.setTextSize(16f);
-                    aView.setPadding(0, 0, 0, 8);
-                    contentContainer.addView(aView);
-                }
-            }
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-}
+

@@ -20,7 +20,6 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         this.context = context;
         this.quizList = quizList;
     }
-
     @NonNull
     @Override
     public QuizViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
