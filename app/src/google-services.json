@@ -1,26 +1,45 @@
 {
   "project_info": {
-    "project_number": "726653765442",
-    "project_id": "project-95471",
-    "storage_bucket": "project-95471.firebasestorage.app"
+    "project_number": "1032424218199",
+    "firebase_url": "https://threatiq-eduv-default-rtdb.firebaseio.com",
+    "project_id": "threatiq-eduv",
+    "storage_bucket": "threatiq-eduv.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:726653765442:android:56f6e11424c0ad9f75aadb",
+        "mobilesdk_app_id": "1:1032424218199:android:8bbea9b65af4a74df90d12",
         "android_client_info": {
           "package_name": "com.example.threatiq"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1032424218199-g9pu8n7kl70nuetd7agfnatnd9titq8c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.threatiq",
+            "certificate_hash": "75370cfe11a803934d4fefbf63410e0150da1d5b"
+          }
+        },
+        {
+          "client_id": "1032424218199-35a8ncnt858vnvfptgna40hf8rjkjj52.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCLj11rqquSlBsJRg5kJCO_Ass1jBwFt4Q"
+          "current_key": "AIzaSyCv_VOc0npnBxI1p1jIGw3HqhtRFVEI4mA"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032424218199-35a8ncnt858vnvfptgna40hf8rjkjj52.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
