@@ -113,8 +113,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupLessonCardClicks() {
-        // Find the cards using the correct IDs you added to the card layouts.
-        // NOTE: The ID below might be a typo. It should probably be R.id.lesson_card_malware
+        // "Lessons For You" cards
         View passwordCard = findViewById(R.id.lesson_card_password);
         View phishingCard = findViewById(R.id.lesson_card_phishing);
         View socialCard = findViewById(R.id.lesson_card_social);
@@ -131,6 +130,17 @@ public class MainActivity extends AppCompatActivity {
         }
         if (malwareCard != null) {
             malwareCard.setOnClickListener(v -> openLessonDetail("Malware Protection", R.drawable.malware));
+        }
+
+        // "Most Popular" cards
+        View shortcutPasswordCard = findViewById(R.id.shortcut_password_card);
+        View shortcutMalwareCard = findViewById(R.id.shortcut_malware_card);
+
+        if (shortcutPasswordCard != null) {
+            shortcutPasswordCard.setOnClickListener(v -> openLessonDetail("Password Security", R.drawable.password_security));
+        }
+        if (shortcutMalwareCard != null) {
+            shortcutMalwareCard.setOnClickListener(v -> openLessonDetail("Malware Protection", R.drawable.malware));
         }
     }
 
