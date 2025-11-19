@@ -2,23 +2,14 @@ package com.example.threatiq;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class QuizzesActivity extends AppCompatActivity {
 
@@ -35,14 +26,12 @@ public class QuizzesActivity extends AppCompatActivity {
         quizzesRecyclerView = findViewById(R.id.quizzes_recycler_view);
         quizzesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Create dummy quiz data
-        setupQuizData();
-
-        // Set up the adapter
+        quizList = new ArrayList<>();
         quizAdapter = new QuizAdapter(this, quizList);
         quizzesRecyclerView.setAdapter(quizAdapter);
 
-        // --- Handle the Bottom Navigation ---
+        setupQuizData();
+
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.navigation_quizzes);
 
@@ -60,8 +49,7 @@ public class QuizzesActivity extends AppCompatActivity {
                 return true;
             } else if (itemId == R.id.navigation_quizzes) {
                 return true; // Already here
-            }
-            else if (itemId == R.id.navigation_profile) {
+            } else if (itemId == R.id.navigation_profile) {
                 Intent intent = new Intent(QuizzesActivity.this, ProfileActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
@@ -71,19 +59,22 @@ public class QuizzesActivity extends AppCompatActivity {
     }
 
     private void setupQuizData() {
-        quizList = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("quizzes").get()
                 .addOnSuccessListener(query -> {
+                    quizList.clear();
                     for (DocumentSnapshot doc : query) {
                         String title = doc.getString("title");
-                        String image = doc.getString("image");
+                        String image = doc.getString("image"); // name of drawable (optional)
                         String quizId = doc.getId();
 
-                        int imageRes = getResources().getIdentifier(image, "drawable", getPackageName());
+                        int imageRes = 0;
+                        if (image != null && !image.isEmpty()) {
+                            imageRes = getResources().getIdentifier(image, "drawable", getPackageName());
+                        }
 
-                        quizList.add(new Quiz(title, imageRes, quizId));
+                        quizList.add(new Quiz(title != null ? title : "Untitled", imageRes, quizId));
                     }
                     quizAdapter.notifyDataSetChanged();
                 })
@@ -92,4 +83,3 @@ public class QuizzesActivity extends AppCompatActivity {
                 );
     }
 }
-

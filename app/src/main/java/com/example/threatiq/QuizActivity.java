@@ -1,24 +1,26 @@
 package com.example.threatiq;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -28,9 +30,13 @@ public class QuizActivity extends AppCompatActivity {
     private int currentQuestionIndex = 0;
     private int score = 0;
 
-    private TextView questionTextView;
+    private TextView questionTextView, quizPageTitle;
     private LinearLayout optionsContainer;
     private Button nextButton;
+    private ImageView backButton;
+
+    // track whether current question has been answered
+    private boolean answered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,29 +46,42 @@ public class QuizActivity extends AppCompatActivity {
         questionTextView = findViewById(R.id.question_text);
         optionsContainer = findViewById(R.id.options_container);
         nextButton = findViewById(R.id.next_button);
+        backButton = findViewById(R.id.back_button);
+        quizPageTitle = findViewById(R.id.quiz_page_title);
 
-        // Get the quiz from the intent
+        nextButton.setEnabled(false); // disabled until user answers
+
         selectedQuiz = (Quiz) getIntent().getSerializableExtra("SELECTED_QUIZ");
 
-
-        if (selectedQuiz != null) {
-            getSupportActionBar().setTitle(selectedQuiz.getQuizTitle());
-            loadQuestionsFromFirestore();
+        if (selectedQuiz == null) {
+            Toast.makeText(this, "No quiz selected", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
 
+        quizPageTitle.setText(selectedQuiz.getQuizTitle());
+
+        backButton.setOnClickListener(v -> finish());
+
+        loadQuestionsFromFirestore();
+
         nextButton.setOnClickListener(v -> {
+            if (!answered) {
+                Toast.makeText(this, "Please select an answer first", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // move to next question or finish
             currentQuestionIndex++;
             if (currentQuestionIndex < questions.size()) {
                 displayQuestion();
             } else {
-                // End of quiz
-                Toast.makeText(this, "Quiz finished! Your score: " + score, Toast.LENGTH_LONG).show();
-                finish(); // Go back to the quiz list
+                saveQuizScore();
+                Toast.makeText(this, "Quiz finished! Your score: " + score + " / " + questions.size(), Toast.LENGTH_LONG).show();
+                finish();
             }
         });
     }
-
-
 
     private void loadQuestionsFromFirestore() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -70,85 +89,113 @@ public class QuizActivity extends AppCompatActivity {
         db.collection("quizzes")
                 .document(selectedQuiz.getQuizId())
                 .collection("questions")
-                .orderBy("order") // optional
+                .orderBy("order") // optional field for ordering questions
                 .get()
                 .addOnSuccessListener(query -> {
+                    questions.clear();
                     for (DocumentSnapshot doc : query) {
-                        Question q = new Question(
-                                doc.getString("questionText"),
-                                (List<String>) doc.get("options"),
-                                doc.getLong("correctAnswerIndex").intValue()
-                        );
+                        // defensive: verify fields exist
+                        String qText = doc.getString("questionText");
+                        List<String> opts = (List<String>) doc.get("options");
+                        Long correct = doc.getLong("correctAnswerIndex");
+
+                        if (qText == null || opts == null || correct == null) continue;
+
+                        Question q = new Question(qText, opts, correct.intValue());
                         questions.add(q);
                     }
 
                     if (questions.isEmpty()) {
-                        Toast.makeText(this, "No questions found", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "No questions found for this quiz.", Toast.LENGTH_SHORT).show();
                         finish();
-                    } else {
-                        displayQuestion();
+                        return;
                     }
+
+                    // start quiz
+                    currentQuestionIndex = 0;
+                    score = 0;
+                    displayQuestion();
                 })
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Failed to load questions", Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to load questions", Toast.LENGTH_SHORT).show();
+                });
     }
 
-    /**
-     * Display a question and options
-     */
     private void displayQuestion() {
-        Question currentQuestion = questions.get(currentQuestionIndex);
-        questionTextView.setText(currentQuestion.getQuestionText());
+        answered = false;
+        nextButton.setEnabled(false);
 
         optionsContainer.removeAllViews();
 
-        List<String> options = currentQuestion.getOptions();
-        for (int i = 0; i < options.size(); i++) {
-            MaterialButton optionButton = new MaterialButton(
-                    this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle
-            );
-            optionButton.setText(options.get(i));
-            optionButton.setTag(i);
-            optionButton.setOnClickListener(v -> checkAnswer((int) v.getTag()));
-            optionsContainer.addView(optionButton);
+        Question q = questions.get(currentQuestionIndex);
+        questionTextView.setText((currentQuestionIndex + 1) + ". " + q.getQuestionText());
+        questionTextView.setTextColor(ContextCompat.getColor(this, R.color.black));
+
+        List<String> opts = q.getOptions();
+        for (int i = 0; i < opts.size(); i++) {
+            MaterialButton btn = new MaterialButton(this, null,
+                    com.google.android.material.R.attr.materialButtonOutlinedStyle);
+            btn.setText(opts.get(i));
+            btn.setTag(i);
+            btn.setAllCaps(false);
+            btn.setOnClickListener(v -> onOptionSelected((MaterialButton) v));
+            // layout params: match parent width, wrap content height, margin
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(0, 12, 0, 0);
+            optionsContainer.addView(btn, lp);
         }
     }
 
-    /**
-     * Handle answer and increase score
-     */
-    private void checkAnswer(int selectedOptionIndex) {
-        Question currentQuestion = questions.get(currentQuestionIndex);
+    private void onOptionSelected(MaterialButton selectedBtn) {
+        if (answered) return; // ignore double taps
 
-        if (selectedOptionIndex == currentQuestion.getCorrectAnswerIndex()) {
+        answered = true;
+        nextButton.setEnabled(true); // allow moving forward
+
+        int selectedIndex = (int) selectedBtn.getTag();
+        Question current = questions.get(currentQuestionIndex);
+        int correctIndex = current.getCorrectAnswerIndex();
+
+        // color buttons: green for correct, red for selected wrong
+        for (int i = 0; i < optionsContainer.getChildCount(); i++) {
+            View child = optionsContainer.getChildAt(i);
+            child.setEnabled(false);
+            if (!(child instanceof MaterialButton)) continue;
+            MaterialButton b = (MaterialButton) child;
+
+            if ((int) b.getTag() == correctIndex) {
+                b.setBackgroundColor(Color.parseColor("#4CAF50")); // green
+                b.setTextColor(Color.WHITE);
+            } else if ((int) b.getTag() == selectedIndex) {
+                b.setBackgroundColor(Color.parseColor("#F44336")); // red
+                b.setTextColor(Color.WHITE);
+            } else {
+                // keep default outlined style for others
+            }
+        }
+
+        if (selectedIndex == correctIndex) {
             score++;
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
         }
-
-        // Disable all option buttons after selection
-        for (int i = 0; i < optionsContainer.getChildCount(); i++) {
-            optionsContainer.getChildAt(i).setEnabled(false);
-        }
     }
 
-    /**
-     * Save quiz score to Firestore per user
-     */
     private void saveQuizScore() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
+        if (selectedQuiz == null || questions.isEmpty()) return;
+        var user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) return;
 
         Map<String, Object> result = new HashMap<>();
         result.put("quizId", selectedQuiz.getQuizId());
         result.put("score", score);
         result.put("total", questions.size());
-        result.put("timestamp", FieldValue.serverTimestamp());
+        result.put("timestamp", com.google.firebase.firestore.FieldValue.serverTimestamp());
 
-        db.collection("users")
+        FirebaseFirestore.getInstance()
+                .collection("users")
                 .document(user.getUid())
                 .collection("quizResults")
                 .add(result);

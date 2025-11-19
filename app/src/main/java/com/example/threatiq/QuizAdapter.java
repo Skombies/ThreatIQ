@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
 
     @Override
     public int getItemCount() {
-        return quizList.size();
+        return quizList == null ? 0 : quizList.size();
     }
 
     public static class QuizViewHolder extends RecyclerView.ViewHolder {

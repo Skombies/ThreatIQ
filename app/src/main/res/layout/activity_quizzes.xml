@@ -7,32 +7,54 @@
     android:background="@android:color/white"
     tools:context=".QuizzesActivity">
 
-    <LinearLayout
+    <!-- This ConstraintLayout will hold the header and the RecyclerView -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="?attr/actionBarSize">
+        android:paddingBottom="?attr/actionBarSize"> <!-- Padding to not overlap with nav bar -->
 
+        <!-- The Green Header "Border" -->
+        <View
+            android:id="@+id/header_background"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:background="#1A3A3A"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Page Title -->
         <TextView
+            android:id="@+id/quizzes_page_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             android:text="Available Quizzes"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             android:textSize="28sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/header_background"
+            app:layout_constraintStart_toStartOf="@id/header_background" />
 
+        <!-- RecyclerView for the Quizzes -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/quizzes_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="8dp"
+            android:clipToPadding="false"
+            app:layout_constraintTop_toBottomOf="@id/header_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <!-- Bottom Navigation View -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        style="@style/Widget.App.BottomNavigationView"
         android:id="@+id/bottom_navigation"
+        style="@style/Widget.App.BottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
